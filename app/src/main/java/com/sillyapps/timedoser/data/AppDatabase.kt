@@ -4,18 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.sillyapps.timedoser.task.di.TaskDataComponent
-import com.sillyapps.timedoser.task.model.TaskDataModel
-import com.sillyapps.timedoser.task.persistence.TaskDao
-import com.sillyapps.timedoser.task.persistence.TaskDatabase
+import androidx.room.TypeConverters
+import com.sillyapps.timedoser.data.template.model.TaskListConverter
+import com.sillyapps.timedoser.data.template.model.TemplateDataModel
+import com.sillyapps.timedoser.data.template.persistence.TemplateDao
+import com.sillyapps.timedoser.data.template.persistence.TemplateDatabase
 
-@Database(entities = [TaskDataModel::class], version = 1, exportSchema = false)
-abstract class AppDatabase: RoomDatabase(), TaskDatabase {
+@Database(entities = [TemplateDataModel::class], version = 1, exportSchema = false)
+@TypeConverters(TaskListConverter::class)
+abstract class AppDatabase: RoomDatabase(), TemplateDatabase {
 
-  abstract val taskDao: TaskDao
+  abstract val templateDao: TemplateDao
 
-  override fun provideTaskDao(): TaskDao {
-    return taskDao
+  override fun provideTaskDao(): TemplateDao {
+    return templateDao
   }
 
   companion object {

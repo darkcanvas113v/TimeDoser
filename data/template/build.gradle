@@ -28,40 +28,26 @@ android {
   kotlinOptions {
     jvmTarget = '1.8'
   }
-  buildFeatures {
-    compose true
-  }
-  composeOptions {
-    kotlinCompilerExtensionVersion versions.compose
-  }
 }
 
 dependencies {
-  implementation project(":core:di")
-  implementation project(":core:ui")
-
-  implementation project(":common:ui")
   implementation project(':domain:template')
-
-
-  coreLibraryDesugaring desugaringDep
+  implementation project(":core:di")
 
   implementation coreKtx
-  implementation appCompat
 
-  // Compose
-  implementation composeDeps.runtime
-  implementation composeDeps.ui
-  implementation composeDeps.uiTooling
-  implementation composeDeps.foundation
-  implementation composeDeps.foundationLayout
-  implementation composeDeps.material
-  implementation composeDeps.materialIcons
-  implementation composeDeps.materialIconsExtended
-  implementation composeDeps.activity
-  implementation composeDeps.viewModel
-  implementation composeDeps.navigation
+  // Room
+  implementation roomDeps.runtime
+  implementation roomDeps.ktx
+  kapt roomDeps.annotationProcessor
+  testImplementation roomDeps.testing
+
+  implementation coroutinesDeps.core
+  implementation coroutinesDeps.android
 
   implementation daggerDeps.core
   kapt daggerDeps.annotationProcessor
+
+  implementation moshiDeps.core
+  kapt moshiDeps.codegen
 }

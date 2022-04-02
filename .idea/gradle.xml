@@ -16,10 +16,11 @@
             <option value="$PROJECT_DIR$/common/ui" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/di" />
+            <option value="$PROJECT_DIR$/core/ui" />
             <option value="$PROJECT_DIR$/data" />
-            <option value="$PROJECT_DIR$/data/task" />
+            <option value="$PROJECT_DIR$/data/template" />
             <option value="$PROJECT_DIR$/domain" />
-            <option value="$PROJECT_DIR$/domain/task" />
+            <option value="$PROJECT_DIR$/domain/template" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/main-screen" />
           </set>

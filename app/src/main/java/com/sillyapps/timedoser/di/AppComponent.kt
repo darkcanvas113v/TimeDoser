@@ -1,18 +1,19 @@
 package com.sillyapps.timedoser.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.sillyapps.core.di.AppScope
 import com.sillyapps.timedoser.data.AppDatabase
-import com.sillyapps.timedoser.task.di.TaskDataComponent
-import com.sillyapps.timedoser.task.persistence.TaskDatabase
 import dagger.BindsInstance
 import dagger.Component
 
 @AppScope()
-@Component(modules = [DatabaseModule::class])
+@Component(modules = [PersistenceModule::class])
 interface AppComponent {
 
   fun getDatabase(): AppDatabase
+
+  fun getSharedPref(): SharedPreferences
 
   @Component.Builder
   interface Builder {
