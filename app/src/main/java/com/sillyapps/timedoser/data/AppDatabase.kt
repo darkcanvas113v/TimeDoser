@@ -8,17 +8,12 @@ import androidx.room.TypeConverters
 import com.sillyapps.timedoser.data.template.model.TaskListConverter
 import com.sillyapps.timedoser.data.template.model.TemplateDataModel
 import com.sillyapps.timedoser.data.template.persistence.TemplateDao
-import com.sillyapps.timedoser.data.template.persistence.TemplateDatabase
 
 @Database(entities = [TemplateDataModel::class], version = 1, exportSchema = false)
 @TypeConverters(TaskListConverter::class)
-abstract class AppDatabase: RoomDatabase(), TemplateDatabase {
+abstract class AppDatabase: RoomDatabase() {
 
   abstract val templateDao: TemplateDao
-
-  override fun provideTaskDao(): TemplateDao {
-    return templateDao
-  }
 
   companion object {
     @Volatile

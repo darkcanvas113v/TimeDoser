@@ -53,6 +53,9 @@ dependencies {
 
   implementation project(":common:ui")
   implementation project(':data:template')
+  implementation project(':data:day')
+  implementation project(':domain:template')
+  implementation project(':domain:day')
 
 
   coreLibraryDesugaring desugaringDep
