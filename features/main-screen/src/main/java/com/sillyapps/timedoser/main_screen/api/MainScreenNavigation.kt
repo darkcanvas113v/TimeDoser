@@ -2,13 +2,14 @@ package com.sillyapps.timedoser.main_screen.api
 
 import androidx.compose.runtime.Composable
 import com.sillyapps.core.ui.daggerViewModel
+import com.sillyapps.timedoser.domain.DayRepository
 import com.sillyapps.timedoser.domain.template.TemplateRepository
 import com.sillyapps.timedoser.main_screen.di.DaggerMainScreenComponent
 import com.sillyapps.timedoser.main_screen.ui.MainScreen
 
 @Composable
 fun MainScreenNavigation(
-  repository: TemplateRepository,
+  repository: DayRepository,
   onItemClick: (Long) -> Unit
 ) {
 

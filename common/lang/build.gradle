@@ -27,29 +27,8 @@ android {
   kotlinOptions {
     jvmTarget = '1.8'
   }
-  buildFeatures {
-    compose true
-  }
-  composeOptions {
-    kotlinCompilerExtensionVersion versions.compose
-  }
 }
 
 dependencies {
 
-  implementation coreKtx
-  implementation appCompat
-
-  // Compose
-  implementation composeDeps.runtime
-  implementation composeDeps.ui
-  implementation composeDeps.uiTooling
-  implementation composeDeps.foundation
-  implementation composeDeps.foundationLayout
-  implementation composeDeps.material
-  implementation composeDeps.materialIcons
-  implementation composeDeps.materialIconsExtended
-  implementation composeDeps.activity
-  implementation composeDeps.viewModel
-  implementation composeDeps.navigation
 }

@@ -24,6 +24,7 @@ class App: Application() {
     DaggerDayDataComponent.builder()
       .sharedPref(appComponent.getSharedPref())
       .templateRepository(templateDataComponent.getTemplateRepository())
+      .build()
   }
 
 }

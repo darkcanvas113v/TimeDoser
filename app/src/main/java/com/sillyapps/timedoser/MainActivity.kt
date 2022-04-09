@@ -11,32 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.sillyapps.timedoser.common.ui.theme.TimeDoserTheme
+import com.sillyapps.timedoser.ui.RootContainer
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+
+    val app = (application as App)
+
     setContent {
-      TimeDoserTheme {
-        Surface(
-          modifier = Modifier.fillMaxSize(),
-          color = MaterialTheme.colors.background
-        ) {
-          Greeting("Android")
-        }
-      }
+      RootContainer(
+        dayRepository = app.dayDataComponent.getDayRepository()
+      )
     }
-  }
-}
-
-@Composable
-fun Greeting(name: String) {
-  Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-  TimeDoserTheme {
-    Greeting("Android")
   }
 }
