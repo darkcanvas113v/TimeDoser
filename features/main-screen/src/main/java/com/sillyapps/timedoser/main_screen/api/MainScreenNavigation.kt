@@ -10,7 +10,7 @@ import com.sillyapps.timedoser.main_screen.ui.MainScreen
 @Composable
 fun MainScreenNavigation(
   repository: DayRepository,
-  onItemClick: (Long) -> Unit
+  onItemClick: (Int) -> Unit
 ) {
 
   val component = DaggerMainScreenComponent.builder()
@@ -21,7 +21,8 @@ fun MainScreenNavigation(
 
   MainScreen(
     stateHolder = viewModel,
-    onItemClick = onItemClick
+    onItemClick = onItemClick,
+    onEmptyButtonClick = {}
   )
 
 }

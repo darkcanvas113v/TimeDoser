@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MainScreenStateHolder {
 
-  val day: Flow<DataState<Day>>
+  fun getDay(): Flow<DataState<Day>>
 
   fun pause()
 

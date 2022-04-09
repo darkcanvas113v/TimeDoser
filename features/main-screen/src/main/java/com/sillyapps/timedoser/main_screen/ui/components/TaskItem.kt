@@ -31,7 +31,7 @@ fun TaskItem(
     elevation = 4.dp,
     modifier = Modifier
       .fillMaxWidth()
-      .padding(start = 8.dp, end = 8.dp, top = 8.dp)
+      .padding(start = 8.dp, end = 8.dp, top = 16.dp)
   ) {
     Row(
       modifier = Modifier
@@ -98,6 +98,7 @@ fun TaskItem(
 
         LinearProgressIndicator(
           progress = task.relativeProgress,
+          color = MaterialTheme.colors.primary.copy(alpha = 0.7f),
           modifier = Modifier
             .padding(top = 2.dp)
             .fillMaxWidth()
