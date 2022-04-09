@@ -1,5 +1,9 @@
 package com.sillyapps.timedoser
 
+/*
+* Made by darkcanvas113v
+* */
+
 import android.app.Application
 import com.sillyapps.timedoser.data.day.di.DaggerDayDataComponent
 import com.sillyapps.timedoser.data.template.di.DaggerTemplateDataComponent
