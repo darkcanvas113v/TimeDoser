@@ -1,3 +1,8 @@
 <resources>
   <string name="app_name">TimeDoser</string>
+
+  <string name="drawer_title">TimeDoser</string>
+
+  <string name="main_screen">Main screen</string>
+  <string name="template_screen">Templates</string>
 </resources>
