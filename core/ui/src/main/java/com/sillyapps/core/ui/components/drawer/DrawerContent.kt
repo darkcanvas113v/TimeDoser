@@ -13,16 +13,17 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.sillyapps.core.ui.R
 
 @Composable
 fun ColumnScope.DrawerContent(
   items: List<DrawerItemModel>,
-  onNavigateTo: (String) -> Unit
+  navController: NavHostController
 ) {
-  var currentItemId by remember {
-    mutableStateOf(0)
-  }
+  val currentRoute = navController.currentDestination?.route ?: ""
 
   Text(
     text = "Drawer title",
@@ -34,14 +35,13 @@ fun ColumnScope.DrawerContent(
   Divider()
 
   Column() {
-    items.forEachIndexed() { pos, model ->
+    items.forEach { model ->
       DrawerItem(
         onNavigateTo = { route ->
-          currentItemId = pos
-          onNavigateTo(model.route)
+          navController.navigate(model.route)
         },
         model = model,
-        isSelected = currentItemId == pos
+        isSelected = currentRoute == model.route
       )
     }
   }
@@ -50,6 +50,7 @@ fun ColumnScope.DrawerContent(
 @Preview
 @Composable
 fun DrawerPreview() {
+  val navController = rememberNavController()
   MaterialTheme() {
     Surface() {
       Column() {
@@ -71,7 +72,7 @@ fun DrawerPreview() {
               route = "main_screen"
             ),
           ),
-          onNavigateTo = {})
+          navController = navController)
       }
     }
   }

@@ -29,7 +29,13 @@ class DayInteractor @Inject constructor(
     }
   }
 
-  fun getDay(): Flow<DataState<Day>> = state
+  fun getDay(): Flow<DataState<Day>> {
+    scope.launch {
+      load()
+    }
+
+    return state
+  }
 
   suspend fun load() {
     val day = dayRepository.getDay()

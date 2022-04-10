@@ -15,6 +15,7 @@ class DayRepositoryImpl @Inject constructor(
   private val dayDataSource: DayDataSource,
   private val templateRepository: TemplateRepository
 ): DayRepository {
+
   override suspend fun getDay(): DataState<Day> = withContext(ioDispatcher) {
     val template = templateRepository.getDefaultTemplate()?.toDay()
 

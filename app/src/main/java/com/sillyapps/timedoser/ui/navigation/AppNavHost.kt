@@ -17,7 +17,7 @@ fun AppNavHost(
 
   NavHost(
     navController = navController,
-    startDestination = "") {
+    startDestination = "main_screen") {
 
     composable(route = "main_screen") {
       MainScreenNavigation(
