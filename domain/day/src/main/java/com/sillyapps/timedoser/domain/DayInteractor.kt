@@ -37,7 +37,7 @@ class DayInteractor @Inject constructor(
     return state
   }
 
-  suspend fun load() {
+  private suspend fun load() {
     val day = dayRepository.getDay()
     if (day is DataState.Success) {
       modelStore.changeModel(day.data)
@@ -46,10 +46,12 @@ class DayInteractor @Inject constructor(
   }
 
   fun pause() {
+    scope.cancel()
     modelStore.pause()
   }
 
   fun stop() {
+    scope.cancel()
     ticker.stop()
     scope.launch {
       load()
@@ -61,7 +63,6 @@ class DayInteractor @Inject constructor(
       ticker.getTickerEvents().collect {
         modelStore.progress()
       }
-      scope.cancel()
     }
     modelStore.start()
   }

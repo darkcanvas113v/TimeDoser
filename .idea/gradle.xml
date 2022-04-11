@@ -29,6 +29,8 @@
             <option value="$PROJECT_DIR$/domain/template" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/main-screen" />
+            <option value="$PROJECT_DIR$/features/template-editor-screen" />
+            <option value="$PROJECT_DIR$/features/template-list-screen" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

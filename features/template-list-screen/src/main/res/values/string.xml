@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="total_duration">Total duration:</string>
+  <string name="task_count">Task count:</string>
+
+  <string name="no_templates">No templates</string>
+</resources>

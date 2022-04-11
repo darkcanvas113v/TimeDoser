@@ -35,12 +35,13 @@ fun TaskItem(
   ) {
     Row(
       modifier = Modifier
-        .height(90.dp)
+        .height(100.dp)
     ) {
       Box(
         modifier = Modifier
           .background(MaterialTheme.colors.primary)
           .fillMaxHeight()
+          .width(56.dp)
       ) {
         Box(
           modifier = Modifier
@@ -73,14 +74,14 @@ fun TaskItem(
       Column(
         modifier = Modifier
           .padding(12.dp)
-          .fillMaxHeight()
+          .fillMaxHeight(),
       ) {
         Text(
           text = task.name,
           overflow = TextOverflow.Ellipsis,
           maxLines = 1,
         )
-        
+
         Spacer(modifier = Modifier.weight(1f))
         
         Box(modifier = Modifier.fillMaxWidth()) {
