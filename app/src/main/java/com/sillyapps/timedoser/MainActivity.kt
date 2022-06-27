@@ -21,7 +21,8 @@ class MainActivity : ComponentActivity() {
 
     setContent {
       RootContainer(
-        dayRepository = app.dayDataComponent.getDayRepository()
+        dayComponent = app.dayComponent,
+        templateRepository = app.templateDataComponent.getTemplateRepository()
       )
     }
   }

@@ -3,18 +3,20 @@ package com.sillyapps.timedoser.main_screen.api
 import androidx.compose.runtime.Composable
 import com.sillyapps.core.ui.daggerViewModel
 import com.sillyapps.timedoser.domain.DayRepository
+import com.sillyapps.timedoser.domain.di.DayComponent
 import com.sillyapps.timedoser.domain.template.TemplateRepository
 import com.sillyapps.timedoser.main_screen.di.DaggerMainScreenComponent
 import com.sillyapps.timedoser.main_screen.ui.MainScreen
 
 @Composable
 fun MainScreenNavigation(
-  repository: DayRepository,
-  onItemClick: (Int) -> Unit
+  dayComponent: DayComponent,
+  onItemClick: (Int) -> Unit,
+  onAddButtonClick: () -> Unit
 ) {
 
   val component = DaggerMainScreenComponent.builder()
-    .repository(repository)
+    .dayComponent(dayComponent)
     .build()
 
   val viewModel = daggerViewModel { component.getViewModel() }
@@ -22,7 +24,8 @@ fun MainScreenNavigation(
   MainScreen(
     stateHolder = viewModel,
     onItemClick = onItemClick,
-    onEmptyButtonClick = {}
+    onEmptyButtonClick = {},
+    onAddButtonClick = onAddButtonClick
   )
 
 }

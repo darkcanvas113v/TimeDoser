@@ -2,11 +2,18 @@ package com.sillyapps.timedoser.data.day
 
 import com.sillyapps.timedoser.data.day.model.DayDataModel
 import com.sillyapps.timedoser.domain.model.Day
+import kotlinx.coroutines.flow.Flow
 
 interface DayDataSource {
 
-  fun saveDay(day: DayDataModel)
+  fun get(): Flow<Day>
 
-  fun loadDay(): DayDataModel?
+  fun getRaw(): Day
+
+  fun set(day: Day)
+
+  fun save()
+
+  fun load()
 
 }

@@ -5,18 +5,20 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.rememberNavController
 import com.sillyapps.core.ui.components.drawer.DrawerContent
-import com.sillyapps.timedoser.R
 import com.sillyapps.timedoser.common.ui.theme.TimeDoserTheme
 import com.sillyapps.timedoser.domain.DayRepository
+import com.sillyapps.timedoser.domain.di.DayComponent
+import com.sillyapps.timedoser.domain.template.TemplateRepository
 import com.sillyapps.timedoser.ui.navigation.AppNavHost
+import com.sillyapps.timedoser.ui.navigation.drawerItems
 import kotlinx.coroutines.launch
 
 @Composable
 fun RootContainer(
-  dayRepository: DayRepository
+  dayComponent: DayComponent,
+  templateRepository: TemplateRepository
 ) {
   val scaffoldState = rememberScaffoldState()
   val navController = rememberNavController()
@@ -52,8 +54,9 @@ fun RootContainer(
       }
     ) {
       AppNavHost(
-        dayRepository = dayRepository,
-        navController = navController
+        dayComponent = dayComponent,
+        navController = navController,
+        templateRepository = templateRepository
       )
     }
   }

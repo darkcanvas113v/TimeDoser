@@ -9,8 +9,10 @@
       <module name="TimeDoser.data.day" target="11" />
       <module name="TimeDoser.data.template" target="11" />
       <module name="TimeDoser.features.main-screen" target="11" />
-      <module name="TimeDoser.features.template-editor-screen" target="11" />
+      <module name="TimeDoser.features.task-editor-screen" target="11" />
       <module name="TimeDoser.features.template-list-screen" target="11" />
+      <module name="TimeDoser.features.template-save-screen" target="11" />
+      <module name="TimeDoser.templates.ui-feature" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

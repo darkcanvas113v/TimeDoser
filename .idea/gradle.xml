@@ -29,11 +29,13 @@
             <option value="$PROJECT_DIR$/domain/template" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/main-screen" />
-            <option value="$PROJECT_DIR$/features/template-editor-screen" />
+            <option value="$PROJECT_DIR$/features/task-editor-screen" />
             <option value="$PROJECT_DIR$/features/template-list-screen" />
+            <option value="$PROJECT_DIR$/features/template-save-screen" />
+            <option value="$PROJECT_DIR$/templates" />
+            <option value="$PROJECT_DIR$/templates/ui-feature" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

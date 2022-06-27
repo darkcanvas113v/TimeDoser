@@ -61,6 +61,9 @@ dependencies {
   implementation project(':domain:day')
 
   implementation project(':features:main-screen')
+  implementation project(':features:template-list-screen')
+  implementation project(':features:template-save-screen')
+  implementation project(':features:task-editor-screen')
 
   coreLibraryDesugaring desugaringDep
 
@@ -88,4 +91,6 @@ dependencies {
   implementation roomDeps.ktx
   kapt roomDeps.annotationProcessor
   testImplementation roomDeps.testing
+
+  implementation moshiDeps.core
 }

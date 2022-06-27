@@ -1,12 +1,16 @@
 package com.sillyapps.timedoser.data.day
 
 import com.sillyapps.core.di.IODispatcher
+import com.sillyapps.timedoser.data.day.model.toDataModel
 import com.sillyapps.timedoser.data.day.model.toDay
 import com.sillyapps.timedoser.domain.DataState
 import com.sillyapps.timedoser.domain.DayRepository
 import com.sillyapps.timedoser.domain.model.Day
 import com.sillyapps.timedoser.domain.template.TemplateRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -16,15 +20,34 @@ class DayRepositoryImpl @Inject constructor(
   private val templateRepository: TemplateRepository
 ): DayRepository {
 
-  override suspend fun getDay(): DataState<Day> = withContext(ioDispatcher) {
-    val template = templateRepository.getDefaultTemplate()?.toDay()
+  private val status = MutableStateFlow<DataState<Day>>(DataState.InitialState())
 
-    if (template == null) DataState.Empty()
-    else DataState.Success(template)
+  private val state = status.combine(dayDataSource.get()) { status, day ->
+    when (status) {
+      is DataState.Success -> DataState.Success(day)
+      else -> status
+    }
   }
 
-  override suspend fun saveDay(day: Day) = withContext(ioDispatcher) {
+  override fun getDay(): Flow<DataState<Day>> = state
 
+  override suspend fun setDay(day: Day) {
+    dayDataSource.set(day)
+  }
+
+  override suspend fun getDayRaw(): Day {
+    return dayDataSource.getRaw()
+  }
+
+  override suspend fun load() {
+    val day = templateRepository.getDefaultTemplate()?.toDay()
+
+    dayDataSource.set(day ?: Day.EMPTY)
+    status.value = DataState.Success(Day.EMPTY)
+  }
+
+  override suspend fun saveDay() = withContext(ioDispatcher) {
+    dayDataSource.save()
   }
 
 
