@@ -40,6 +40,8 @@ class DayRepositoryImpl @Inject constructor(
   }
 
   override suspend fun load() {
+    if (status.value !is DataState.InitialState) return
+
     val day = templateRepository.getDefaultTemplate()?.toDay()
 
     dayDataSource.set(day ?: Day.EMPTY)
