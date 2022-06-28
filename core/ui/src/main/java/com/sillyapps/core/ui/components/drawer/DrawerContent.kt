@@ -21,7 +21,8 @@ import com.sillyapps.core.ui.R
 @Composable
 fun ColumnScope.DrawerContent(
   items: List<DrawerItemModel>,
-  navController: NavHostController
+  navController: NavHostController,
+  closeDrawer: () -> Unit
 ) {
   val currentRoute = navController.currentDestination?.route ?: ""
 
@@ -39,6 +40,7 @@ fun ColumnScope.DrawerContent(
       DrawerItem(
         onNavigateTo = { route ->
           navController.navigate(model.route)
+          closeDrawer()
         },
         model = model,
         isSelected = currentRoute == model.route
@@ -72,7 +74,9 @@ fun DrawerPreview() {
               route = "main_screen"
             ),
           ),
-          navController = navController)
+          navController = navController,
+          closeDrawer = {}
+        )
       }
     }
   }

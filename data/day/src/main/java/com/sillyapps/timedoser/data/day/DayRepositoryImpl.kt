@@ -52,5 +52,4 @@ class DayRepositoryImpl @Inject constructor(
     dayDataSource.save()
   }
 
-
 }

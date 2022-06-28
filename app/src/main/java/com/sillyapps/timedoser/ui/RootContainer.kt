@@ -49,7 +49,13 @@ fun RootContainer(
       drawerContent = {
         DrawerContent(
           items = drawerItems,
-          navController = navController
+          navController = navController,
+          closeDrawer = {
+            scope.launch {
+              scaffoldState.drawerState.apply {
+                close()
+            }
+          }}
         )
       }
     ) {
