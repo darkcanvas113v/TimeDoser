@@ -1,5 +1,6 @@
 package com.sillyapps.timedoser.features.task_editor_screen.ui
 
+import android.app.TimePickerDialog
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -10,10 +11,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sillyapps.core_time.convertMillisToStringFormat
+import com.sillyapps.timedoser.common.time_picker.TimePickerDialog
 import com.sillyapps.timedoser.common.ui.theme.TimeDoserTheme
 import com.sillyapps.timedoser.features.task_editor_screen.R
 import com.sillyapps.timedoser.features.task_editor_screen.models.TaskEditorModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import com.sillyapps.timedoser.common.lang.R as lang
 
@@ -25,6 +28,10 @@ fun TaskEditorDialogContent(
   val task by remember(stateHolder) {
     stateHolder.getTask()
   }.collectAsState(initial = TaskEditorModel.DEFAULT_VALUE)
+
+  val (timePickerDialogVisibility, setTimePickerDialogVisibility) = remember {
+    mutableStateOf(false)
+  }
 
   Surface(
     shape = MaterialTheme.shapes.small
@@ -59,7 +66,9 @@ fun TaskEditorDialogContent(
           modifier = Modifier.padding(bottom = 4.dp)
         )
         OutlinedButton(
-          onClick = {},
+          onClick = {
+            setTimePickerDialogVisibility(true)
+          },
         ) {
           Text(
             text = convertMillisToStringFormat(task.duration),
@@ -103,26 +112,34 @@ fun TaskEditorDialogContent(
       }
     }
   }
+
+  TimePickerDialog(
+    visible = timePickerDialogVisibility,
+    onDismiss = { setTimePickerDialogVisibility(false) },
+    time = task.duration,
+    onGetResult = {
+      stateHolder.setDuration(it)
+    }
+  )
 }
 
 @Preview
 @Composable
 fun TaskEditorDialogPreview() {
-  var task by remember {
-    mutableStateOf(TaskEditorModel.DEFAULT_VALUE)
-  }
 
   val stateHolder = object : TaskEditorStateHolder {
+    val task = MutableStateFlow(TaskEditorModel.DEFAULT_VALUE)
+
     override fun getTask(): Flow<TaskEditorModel> {
-      return flow { emit(task) }
+      return task
     }
 
     override fun setName(name: String) {
-      task = task.copy(name = name)
+      task.value = task.value.copy(name = name)
     }
 
     override fun setDuration(duration: Long) {
-      task = task.copy(duration = duration)
+      task.value = task.value.copy(duration = duration)
     }
 
     override fun save() {

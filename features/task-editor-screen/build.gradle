@@ -44,6 +44,7 @@ dependencies {
 
   implementation project(":common:ui")
   implementation project(":common:lang")
+  implementation project(":common:time-picker")
 
   implementation project(":domain:day")
 
