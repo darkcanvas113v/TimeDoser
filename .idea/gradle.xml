@@ -33,8 +33,6 @@
             <option value="$PROJECT_DIR$/features/task-editor-screen" />
             <option value="$PROJECT_DIR$/features/template-list-screen" />
             <option value="$PROJECT_DIR$/features/template-save-screen" />
-            <option value="$PROJECT_DIR$/templates" />
-            <option value="$PROJECT_DIR$/templates/ui-feature" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -8,6 +8,7 @@ interface DayRepository {
   fun getDay(): Flow<DataState<Day>>
 
   suspend fun setDay(day: Day)
+
   suspend fun getDayRaw(): Day
 
   suspend fun load()

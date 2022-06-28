@@ -102,6 +102,7 @@ fun TaskEditorDialogContent(
 
         Button(
           onClick = {
+            if (!stateHolder.taskIsValid()) return@Button
             stateHolder.save()
             onDismiss()
           },
@@ -144,6 +145,10 @@ fun TaskEditorDialogPreview() {
 
     override fun save() {
 
+    }
+
+    override fun taskIsValid(): Boolean {
+      return true
     }
 
   }

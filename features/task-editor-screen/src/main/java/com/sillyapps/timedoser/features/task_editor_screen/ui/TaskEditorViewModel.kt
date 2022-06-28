@@ -39,6 +39,14 @@ class TaskEditorViewModel @Inject constructor(
     task.value = task.value.copy(duration = duration)
   }
 
+  override fun taskIsValid(): Boolean {
+    task.value.apply {
+      if (name.isBlank()) return false
+      if (duration == 0L) return false
+      return true
+    }
+  }
+
   override fun save() {
     viewModelScope.launch {
       setTaskAtPositionUseCase(taskPosition, task.value.toDomainModel())

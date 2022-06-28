@@ -11,4 +11,6 @@ interface TaskEditorStateHolder {
   fun setDuration(duration: Long)
 
   fun save()
+
+  fun taskIsValid(): Boolean
 }
