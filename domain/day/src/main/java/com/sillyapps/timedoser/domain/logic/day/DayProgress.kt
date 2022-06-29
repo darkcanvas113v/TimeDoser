@@ -5,6 +5,8 @@ import com.sillyapps.timedoser.domain.model.Day
 import com.sillyapps.timedoser.domain.model.RunningTask
 
 internal fun Day.tick(): Day {
+  if (tasks.isEmpty()) return this
+
   val mutTasks = tasks.toMutableList()
 
   val currentTask = mutTasks[currentTaskPos].progress()

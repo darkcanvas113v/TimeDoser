@@ -10,6 +10,8 @@ import kotlinx.coroutines.MainScope
 
 class App: Application() {
 
+  private val appScope = MainScope()
+
   val appComponent by lazy {
     DaggerAppComponent.builder()
       .context(applicationContext)
@@ -33,15 +35,8 @@ class App: Application() {
   val dayComponent by lazy {
     DaggerDayComponent.builder()
       .repository(dayDataComponent.getDayRepository())
+      .appScope(appScope)
       .build()
-  }
-
-  override fun onCreate() {
-    super.onCreate()
-  }
-
-  private fun initializeModules() {
-    SaveTemplateDialogApi.initialize(templateDataComponent.getTemplateRepository())
   }
 
 }
