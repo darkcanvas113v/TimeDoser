@@ -17,8 +17,10 @@ class CoroutineTicker @Inject constructor(): Ticker {
 
   override fun start(interval: Long) {
     counter = CoroutineScope(Dispatchers.Default).launch {
-      events.emit(Unit)
-      delay(interval)
+      while (true) {
+        events.emit(Unit)
+        delay(interval)
+      }
     }
   }
 

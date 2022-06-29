@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 class StartDayUseCase @Inject constructor(
   private val repository: DayRepository,
-  private val appScope: CoroutineScope,
   private val ticker: Ticker
 ) {
 
@@ -23,12 +22,10 @@ class StartDayUseCase @Inject constructor(
 
     repository.setDay(day.start())
 
-    if (appScope.isActive) return
+    ticker.start(1000L)
 
-    appScope.launch {
-      ticker.getTickerEvents().collect {
-        progress()
-      }
+    ticker.getTickerEvents().collect {
+      progress()
     }
   }
 

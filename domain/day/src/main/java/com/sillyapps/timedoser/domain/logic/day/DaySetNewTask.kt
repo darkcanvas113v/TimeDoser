@@ -6,7 +6,7 @@ import com.sillyapps.timedoser.domain.logic.task.taskStart
 import com.sillyapps.timedoser.domain.model.Day
 
 internal fun Day.setNewTask(): Day {
-  if (currentTaskPos == tasks.size) {
+  if (currentTaskPos == tasks.size - 1) {
     return this.copy(state = Day.State.COMPLETED)
   }
 
@@ -17,6 +17,7 @@ internal fun Day.setNewTask(): Day {
   mutTasks[currentTaskPos+1] = mutTasks[currentTaskPos+1].taskStart(startTime = currentTask.getEndTime())
 
   return this.copy(
-    tasks = mutTasks
+    tasks = mutTasks,
+    currentTaskPos = currentTaskPos + 1
   )
 }

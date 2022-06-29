@@ -10,8 +10,6 @@ import kotlinx.coroutines.MainScope
 
 class App: Application() {
 
-  val appScope = MainScope()
-
   val appComponent by lazy {
     DaggerAppComponent.builder()
       .context(applicationContext)
@@ -34,7 +32,6 @@ class App: Application() {
 
   val dayComponent by lazy {
     DaggerDayComponent.builder()
-      .appScope(appScope)
       .repository(dayDataComponent.getDayRepository())
       .build()
   }

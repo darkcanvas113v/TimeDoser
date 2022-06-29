@@ -18,15 +18,10 @@ interface DayComponent {
 
   fun getTicker(): Ticker
 
-  fun getAppScope(): CoroutineScope
-
   @Component.Builder
   interface Builder {
     @BindsInstance
     fun repository(repo: DayRepository): Builder
-
-    @BindsInstance
-    fun appScope(scope: CoroutineScope): Builder
 
     fun build(): DayComponent
   }
