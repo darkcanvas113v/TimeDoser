@@ -1,6 +1,5 @@
 package com.sillyapps.timedoser.domain.usecases
 
-import com.sillyapps.core.di.AppScope
 import com.sillyapps.core_util.ticker.Ticker
 import com.sillyapps.timedoser.domain.DayRepository
 import com.sillyapps.timedoser.domain.logic.day.start
@@ -25,8 +24,8 @@ class StartDayUseCase @Inject constructor(
     //TODO сделать глобальный объект который будет следить за тикером
     if (day.state == Day.State.WAITING)
       appScope.launch {
-        ticker.getTickerEvents().collect {
-          progress()
+        ticker.getTicks().collect { dt ->
+          progress(dt)
         }
       }
 
@@ -35,8 +34,8 @@ class StartDayUseCase @Inject constructor(
     repository.setDay(day.start())
   }
 
-  private suspend fun progress() {
-    val day = repository.getDayRaw().tick()
+  private suspend fun progress(dt: Long) {
+    val day = repository.getDayRaw().tick(dt)
 
     if (day.state != Day.State.ACTIVE)
       ticker.stop()

@@ -4,12 +4,12 @@ import com.sillyapps.timedoser.domain.logic.task.progress
 import com.sillyapps.timedoser.domain.model.Day
 import com.sillyapps.timedoser.domain.model.RunningTask
 
-internal fun Day.tick(): Day {
+internal fun Day.tick(dt: Long): Day {
   if (tasks.isEmpty()) return this
 
   val mutTasks = tasks.toMutableList()
 
-  val currentTask = mutTasks[currentTaskPos].progress()
+  val currentTask = mutTasks[currentTaskPos].progress(dt)
   mutTasks[currentTaskPos] = currentTask
 
   if (currentTask.state == RunningTask.State.COMPLETED)

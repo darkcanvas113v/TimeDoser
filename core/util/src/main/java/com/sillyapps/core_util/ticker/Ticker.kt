@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface Ticker {
 
-  fun getTickerEvents(): Flow<Unit>
+  fun getTicks(): Flow<Long>
 
   fun start(interval: Long)
 

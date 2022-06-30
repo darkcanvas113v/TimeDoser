@@ -7,18 +7,23 @@ import javax.inject.Inject
 
 class CoroutineTicker @Inject constructor(): Ticker {
 
-  private val events = MutableSharedFlow<Unit>()
+  private val ticks = MutableSharedFlow<Long>()
 
   private var counter: Job? = null
 
-  override fun getTickerEvents(): Flow<Unit> {
-    return events
+  private var lastUpdateTime = 0L
+
+  override fun getTicks(): Flow<Long> {
+    return ticks
   }
 
   override fun start(interval: Long) {
+    lastUpdateTime = System.currentTimeMillis()
+
     counter = CoroutineScope(Dispatchers.Default).launch {
       while (true) {
-        events.emit(Unit)
+        ticks.emit(System.currentTimeMillis() - lastUpdateTime)
+        lastUpdateTime = System.currentTimeMillis()
         delay(interval)
       }
     }
@@ -27,6 +32,5 @@ class CoroutineTicker @Inject constructor(): Ticker {
   override fun stop() {
     counter?.cancel()
   }
-
 
 }

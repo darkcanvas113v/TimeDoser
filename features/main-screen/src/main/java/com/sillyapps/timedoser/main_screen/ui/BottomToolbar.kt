@@ -40,24 +40,27 @@ fun BottomToolbar(
       )
     }
 
-    if (dayState == Day.State.WAITING.ordinal) {
-      IconButton(onClick = onPlayButtonClick) {
-        Icon(
-          imageVector = Icons.Filled.PlayArrow,
-          contentDescription = null,
-          modifier = Modifier.size(32.dp)
-        )
+    when (dayState) {
+      Day.State.WAITING.ordinal, Day.State.DISABLED.ordinal-> {
+        IconButton(onClick = onPlayButtonClick) {
+          Icon(
+            imageVector = Icons.Filled.PlayArrow,
+            contentDescription = null,
+            modifier = Modifier.size(32.dp)
+          )
+        }
+      }
+      else -> {
+        IconButton(onClick = onPauseButtonClick) {
+          Icon(
+            imageVector = Icons.Filled.Pause,
+            contentDescription = null,
+            modifier = Modifier.size(32.dp)
+          )
+        }
       }
     }
-    else {
-      IconButton(onClick = onPauseButtonClick) {
-        Icon(
-          imageVector = Icons.Filled.Pause,
-          contentDescription = null,
-          modifier = Modifier.size(32.dp)
-        )
-      }
-    }
+
 
     IconButton(onClick = onAddButtonClick) {
       Icon(
