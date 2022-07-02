@@ -50,4 +50,6 @@ dependencies {
   implementation composeDeps.material
   implementation composeDeps.viewModel
   implementation composeDeps.navigation
+
+  implementation timberDep
 }

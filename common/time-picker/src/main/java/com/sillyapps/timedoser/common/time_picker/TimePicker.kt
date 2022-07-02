@@ -1,5 +1,8 @@
 package com.sillyapps.timedoser.common.time_picker
 
+import android.util.Log
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -12,17 +15,19 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.sillyapps.core_time.convertToMillis
 import com.sillyapps.core_time.formatValue
 import com.sillyapps.core_time.getHoursAndMinutes
 import com.sillyapps.timedoser.common.ui.theme.TimeDoserTheme
+import timber.log.Timber
 import com.sillyapps.timedoser.common.lang.R as lang
 
 @Composable
@@ -65,7 +70,11 @@ fun TimePickerDialog(
             hours = mHours,
             setHours = setHours,
             minutes = mMinutes,
-            setMinutes = setMinutes
+            setMinutes = setMinutes,
+            onDone = {
+              onGetResult(convertToMillis(mHours, mMinutes))
+              onDismiss()
+            }
           )
 
           Row(
@@ -109,7 +118,8 @@ fun TimePicker(
   hours: Int,
   setHours: (Int) -> Unit,
   minutes: Int,
-  setMinutes: (Int) -> Unit
+  setMinutes: (Int) -> Unit,
+  onDone: () -> Unit
 ) {
   val focusManager = LocalFocusManager.current
 
@@ -154,6 +164,7 @@ fun TimePicker(
       keyboardActions = KeyboardActions(
         onDone = {
           focusManager.clearFocus()
+          onDone()
         }
       )
     )
@@ -169,30 +180,49 @@ private fun TimePickerItem(
   keyboardOptions: KeyboardOptions,
   keyboardActions: KeyboardActions
 ) {
-  val (typing, setTyping) = remember {
-    mutableStateOf(false)
+
+  var textFieldValue by remember {
+    mutableStateOf(TextFieldValue(formatValue(value)))
   }
 
-  val (text, setText) = remember {
-    mutableStateOf(formatValue(value))
+  val interactionSource by remember {
+    mutableStateOf(MutableInteractionSource())
   }
 
-  if (!typing)
-    setText(formatValue(value))
+  val isFocused by interactionSource.collectIsFocusedAsState()
+
+  LaunchedEffect(isFocused) {
+    textFieldValue = textFieldValue.copy(
+      selection = if (isFocused) {
+        TextRange(start = 0, end = textFieldValue.text.length)
+      } else {
+        TextRange.Zero
+      }
+    )
+  }
 
   TextField(
-    value = text,
-    onValueChange = { newText ->
-      val typedCharacter = newText.lastOrNull()
-      if (typedCharacter != null && !typedCharacter.isDigit()) return@TextField
+    value = textFieldValue,
+    onValueChange = {
+      var newText = it.text
+      val typedCharacter = newText.lastOrNull() ?: return@TextField
+      if (!typedCharacter.isDigit()) return@TextField
 
-      val newValue = newText.toIntOrNull()
-      if (newValue == null || newValue < maxValue)
-        setText(newText)
+      val newValue = newText.toIntOrNull() ?: 0
+
+      if (newValue < maxValue) {
+        if (newText.length > 2)
+          newText = newText.drop(1)
+
+        textFieldValue = it.copy(text = newText, selection = TextRange(newText.length))
+        setValue(newValue)
+      }
       else {
-        setText(typedCharacter.toString())
+        textFieldValue = it.copy(text = typedCharacter.toString(), selection = TextRange(newText.length))
+        setValue(typedCharacter.digitToInt())
       }
     },
+    interactionSource = interactionSource,
     keyboardOptions = keyboardOptions,
     keyboardActions = keyboardActions,
     singleLine = true,
@@ -200,18 +230,6 @@ private fun TimePickerItem(
     modifier = modifier
       .width(120.dp)
       .wrapContentHeight()
-      .onFocusChanged {
-        if (it.isFocused) {
-          setText("")
-          setTyping(true)
-        }
-        if (!it.isFocused && typing) {
-          val newValue = text.toIntOrNull() ?: 0
-          setTyping(false)
-          setValue(newValue)
-        }
-
-      }
   )
 
 }
@@ -228,7 +246,7 @@ fun TimePickerPreview() {
   TimeDoserTheme() {
     Surface() {
       TimePicker(
-        hours, setHours, minutes, setMinutes
+        hours, setHours, minutes, setMinutes, onDone = {}
       )
     }
   }
