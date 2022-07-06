@@ -4,6 +4,7 @@ import android.app.Application
 import com.sillyapps.timedoser.data.day.di.DaggerDayDataComponent
 import com.sillyapps.timedoser.data.template.di.DaggerTemplateDataComponent
 import com.sillyapps.timedoser.di.DaggerAppComponent
+import com.sillyapps.timedoser.domain.api.DayDomainModule
 import com.sillyapps.timedoser.domain.di.DaggerDayComponent
 import com.sillyapps.timedoser.features.template_editor_screen.api.SaveTemplateDialogApi
 import kotlinx.coroutines.MainScope
@@ -32,11 +33,11 @@ class App: Application() {
       .build()
   }
 
-  val dayComponent by lazy {
-    DaggerDayComponent.builder()
-      .repository(dayDataComponent.getDayRepository())
-      .appScope(appScope)
-      .build()
+  val dayDomainModule by lazy {
+    DayDomainModule(
+      appScope = appScope,
+      dayRepository = dayDataComponent.getDayRepository()
+    )
   }
 
 }

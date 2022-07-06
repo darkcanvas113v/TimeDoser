@@ -11,8 +11,7 @@ import javax.inject.Inject
 
 class StartDayUseCase @Inject constructor(
   private val repository: DayRepository,
-  private val ticker: Ticker,
-  private val appScope: CoroutineScope
+  private val ticker: Ticker
 ) {
 
   suspend operator fun invoke() {
@@ -21,25 +20,10 @@ class StartDayUseCase @Inject constructor(
     if (day.tasks.isEmpty())
       return
 
-    //TODO сделать глобальный объект который будет следить за тикером
-    if (day.state == Day.State.WAITING)
-      appScope.launch {
-        ticker.getTicks().collect { dt ->
-          progress(dt)
-        }
-      }
-
     ticker.start(1000L)
 
     repository.setDay(day.start())
   }
 
-  private suspend fun progress(dt: Long) {
-    val day = repository.getDayRaw().tick(dt)
 
-    if (day.state != Day.State.ACTIVE)
-      ticker.stop()
-
-    repository.setDay(day)
-  }
 }
