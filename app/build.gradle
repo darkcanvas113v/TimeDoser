@@ -64,6 +64,8 @@ dependencies {
   implementation project(':features:template-list-screen')
   implementation project(':features:template-save-screen')
   implementation project(':features:task-editor-screen')
+  implementation project(':features:day-service')
+
 
   coreLibraryDesugaring desugaringDep
 

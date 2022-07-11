@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/repositories/TimeDoser/common/ui/src/main/res/drawable/ic_launcher_foreground.xml" value="0.164" />
         <entry key="..\:/repositories/TimeDoser/features/main-screen/src/main/res/drawable/ic_baseline_stop_24.xml" value="0.152" />
       </map>
     </option>

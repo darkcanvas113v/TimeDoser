@@ -19,5 +19,10 @@ data class Day(
       state = State.WAITING,
       currentTaskPos = 0
     )
+
+    val STATE_WAITING = State.WAITING.ordinal
+    val STATE_ACTIVE = State.ACTIVE.ordinal
+    val STATE_COMPLETED = State.COMPLETED.ordinal
+    val STATE_DISABLED = State.DISABLED.ordinal
   }
 }
