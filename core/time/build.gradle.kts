@@ -1,6 +1,8 @@
+import configs.*
+
 plugins {
-  id 'java-library'
-  id 'org.jetbrains.kotlin.jvm'
+  id("java-library")
+  id("org.jetbrains.kotlin.jvm")
 }
 
 java {

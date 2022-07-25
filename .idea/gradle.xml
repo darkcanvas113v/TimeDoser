@@ -13,6 +13,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/common/lang" />
             <option value="$PROJECT_DIR$/common/time-picker" />
@@ -29,6 +30,7 @@
             <option value="$PROJECT_DIR$/domain/day" />
             <option value="$PROJECT_DIR$/domain/template" />
             <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/alarm" />
             <option value="$PROJECT_DIR$/features/day-service" />
             <option value="$PROJECT_DIR$/features/main-screen" />
             <option value="$PROJECT_DIR$/features/task-editor-screen" />
