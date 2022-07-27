@@ -1,3 +1,5 @@
+import configs.*
+
 plugins {
   id("com.android.application")
   id("org.jetbrains.kotlin.android")
@@ -50,7 +52,6 @@ android {
 }
 
 dependencies {
-
   implementation(project(":core:di"))
   implementation(project(":core:ui"))
 
@@ -73,26 +74,11 @@ dependencies {
   implementation(Deps.coreKtx)
   implementation(Deps.appCompat)
 
-  // Compose
-  implementation(Deps.Compose.runtime)
-  implementation(Deps.Compose.ui)
-  implementation(Deps.Compose.uiTooling)
-  implementation(Deps.Compose.foundation)
-  implementation(Deps.Compose.foundationLayout)
-  implementation(Deps.Compose.material)
-  implementation(Deps.Compose.materialIcons)
-  implementation(Deps.Compose.materialIconsExtended)
-  implementation(Deps.Compose.activity)
-  implementation(Deps.Compose.navigation)
-
-  implementation(Deps.Dagger.core)
-  kapt(Deps.Dagger.annotationProcessor)
-
-  // Room
-  implementation(Deps.Room.runtime)
-  implementation(Deps.Room.ktx)
-  kapt(Deps.Room.annotationProcessor)
-  testImplementation(Deps.Room.testing)
+  composeDeps()
+  daggerDeps()
+  roomDeps()
 
   implementation(Deps.Moshi.core)
+
+  androidTestDeps()
 }

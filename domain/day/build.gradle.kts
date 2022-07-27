@@ -14,8 +14,14 @@ java {
 dependencies {
   implementation(project(":core:util"))
   implementation(project(":core:di"))
+  implementation(project(":core:time"))
 
   daggerDeps()
 
   implementation(Deps.Coroutines.core)
+
+  testImplementation(Deps.Test.core)
+  testImplementation(Deps.Test.truth)
+
+  implementation(Deps.timber)
 }

@@ -15,4 +15,6 @@ dependencies {
   daggerDeps()
 
   implementation(Deps.Coroutines.core)
+
+  implementation(Deps.Test.core)
 }

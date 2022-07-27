@@ -1,3 +1,5 @@
+import configs.*
+
 plugins {
   id("com.android.library")
   id("org.jetbrains.kotlin.android")
@@ -54,4 +56,7 @@ dependencies {
   implementation(Deps.Compose.navigation)
 
   implementation(Deps.timber)
+
+
+  androidTestDeps()
 }

@@ -58,4 +58,7 @@ dependencies {
 
   composeDeps()
   daggerDeps()
+
+
+  androidTestDeps()
 }

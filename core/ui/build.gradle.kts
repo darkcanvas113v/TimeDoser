@@ -47,4 +47,7 @@ dependencies {
   composeDeps()
 
   implementation(Deps.timber)
+
+
+  androidTestDeps()
 }

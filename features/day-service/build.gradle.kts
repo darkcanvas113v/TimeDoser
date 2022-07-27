@@ -49,4 +49,7 @@ dependencies {
   daggerDeps()
 
   implementation(Deps.Coroutines.core)
+
+
+  androidTestDeps()
 }

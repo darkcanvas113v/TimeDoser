@@ -7,9 +7,10 @@ object Deps {
 
   const val timber = "com.jakewharton.timber:timber:4.7.1"
 
-  object Junit {
+  object Test {
     const val core = "junit:junit:4.13.2"
     const val android = "androidx.test.ext:junit:1.1.3"
+    const val truth = "com.google.truth:truth:1.1.3"
     const val espresso = "androidx.test.espresso:espresso-core:3.4.0"
   }
 

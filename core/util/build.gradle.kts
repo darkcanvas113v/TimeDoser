@@ -1,5 +1,3 @@
-import configs.*
-
 plugins {
   id("java-library")
   id("org.jetbrains.kotlin.jvm")
@@ -16,4 +14,6 @@ dependencies {
   kapt(Deps.Dagger.annotationProcessor)
 
   implementation(Deps.Coroutines.core)
+
+  implementation(Deps.Test.core)
 }

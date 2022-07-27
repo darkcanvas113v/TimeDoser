@@ -45,4 +45,7 @@ dependencies {
 
   implementation(Deps.Coroutines.core)
   implementation(Deps.Coroutines.android)
+
+
+  androidTestDeps()
 }
