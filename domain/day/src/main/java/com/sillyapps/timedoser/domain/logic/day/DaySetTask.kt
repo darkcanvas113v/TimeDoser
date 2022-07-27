@@ -2,27 +2,26 @@ package com.sillyapps.timedoser.domain.logic.day
 
 import com.sillyapps.timedoser.domain.model.Day
 import com.sillyapps.timedoser.domain.model.RunningTask
+import com.sillyapps.timedoser.domain.model.mutable.MutableDay
+import com.sillyapps.timedoser.domain.model.mutable.MutableTask
+import com.sillyapps.timedoser.domain.model.mutable.toMutableTask
 
-internal fun Day.setTask(pos: Int, task: RunningTask): Day {
-  val mutTasks = tasks.toMutableList()
-
+internal fun MutableDay.setTask(pos: Int, task: RunningTask) {
   if (pos == -1) {
-    mutTasks.add(
-      task.copy(
-        startTime = getEndTime(),
-        state = RunningTask.State.WAITING,
-        progress = 0
-      )
+    val taskToAdd = task.copy(
+      startTime = getEndTime(),
+      state = RunningTask.State.WAITING,
+      progress = 0
+    )
+
+    tasks.add(
+      taskToAdd.toMutableTask()
     )
   }
   else {
-    val prev = mutTasks[pos]
-    mutTasks[pos] = task.copy(
-      startTime = prev.startTime,
-      state = prev.state,
-      progress = prev.progress
-    )
+    tasks[pos].apply {
+      duration = task.duration
+      name = task.name
+    }
   }
-
-  return this.copy(tasks = mutTasks)
 }

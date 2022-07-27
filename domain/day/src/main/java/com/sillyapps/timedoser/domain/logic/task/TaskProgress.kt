@@ -1,13 +1,15 @@
 package com.sillyapps.timedoser.domain.logic.task
 
 import com.sillyapps.timedoser.domain.model.RunningTask
+import com.sillyapps.timedoser.domain.model.mutable.MutableTask
 
-internal fun RunningTask.progress(dt: Long): RunningTask {
+internal fun MutableTask.progress(dt: Long) {
   val newProgress = progress + dt
 
   if (newProgress >= duration) {
-    return completeTask()
+    completeTask()
+    return
   }
 
-  return copy(progress = newProgress)
+  progress = newProgress
 }

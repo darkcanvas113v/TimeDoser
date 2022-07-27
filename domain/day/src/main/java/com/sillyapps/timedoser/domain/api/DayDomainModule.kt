@@ -16,6 +16,6 @@ class DayDomainModule(
     .repository(dayRepository)
     .build()
 
-  val dayProgressWatcher = DayProgressWatcher(dayRepository, appScope, dayComponent.getTicker())
+  val dayProgressWatcher = dayComponent.getDayProgressWatcher()
 
 }

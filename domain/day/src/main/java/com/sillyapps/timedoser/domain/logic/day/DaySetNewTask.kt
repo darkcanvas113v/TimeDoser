@@ -5,20 +5,19 @@ import com.sillyapps.timedoser.domain.logic.task.getEndTime
 import com.sillyapps.timedoser.domain.logic.task.taskStart
 import com.sillyapps.timedoser.domain.model.Day
 import com.sillyapps.timedoser.domain.model.RunningTask
+import com.sillyapps.timedoser.domain.model.mutable.MutableDay
 
-internal fun Day.setNewTask(): Day {
-  val mutTasks = tasks.toMutableList()
-
-  val currentTask = mutTasks[currentTaskPos]
+internal fun MutableDay.setNewTask() {
+  val currentTask = tasks[currentTaskPos]
   if (currentTask.state != RunningTask.State.COMPLETED) {
-    mutTasks[currentTaskPos] = currentTask.completeTask()
+    currentTask.completeTask()
   }
 
   var nextTask = currentTaskPos + 1
 
   for (i in nextTask until tasks.size) {
     if (tasks[i].state == RunningTask.State.DISABLED) {
-      mutTasks[i] = mutTasks[i].completeTask()
+      tasks[i].completeTask()
       nextTask += 1
     } else {
       break
@@ -26,19 +25,11 @@ internal fun Day.setNewTask(): Day {
   }
 
   if (nextTask == tasks.size) {
-    return this.copy(
-      state = Day.State.COMPLETED,
-      tasks = mutTasks,
-      currentTaskPos = tasks.lastIndex
-    )
+    state = Day.State.COMPLETED
+    currentTaskPos = tasks.lastIndex
+    return
   }
 
-  mutTasks[currentTaskPos] = mutTasks[currentTaskPos].completeTask()
-  mutTasks[currentTaskPos + 1] =
-    mutTasks[currentTaskPos + 1].taskStart(startTime = mutTasks[currentTaskPos].getEndTime())
-
-  return this.copy(
-    tasks = mutTasks,
-    currentTaskPos = currentTaskPos + 1
-  )
+  tasks[nextTask].taskStart(startTime = tasks[nextTask - 1].getEndTime())
+  currentTaskPos = nextTask
 }

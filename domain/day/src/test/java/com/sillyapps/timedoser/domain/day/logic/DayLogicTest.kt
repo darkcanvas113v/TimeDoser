@@ -8,7 +8,7 @@ import com.sillyapps.timedoser.domain.logic.day.setNewTask
 import com.sillyapps.timedoser.domain.logic.task.completeTask
 import com.sillyapps.timedoser.domain.logic.task.pause
 import com.sillyapps.timedoser.domain.model.Day
-import com.sillyapps.timedoser.domain.model.RunningTask
+import com.sillyapps.timedoser.domain.model.mutable.MutableTask
 import org.junit.Test
 
 class DayLogicTest {
@@ -19,15 +19,14 @@ class DayLogicTest {
       .setDayState(state = Day.State.ACTIVE)
       .build()
 
-    val tasksCopy = mutableListOf<RunningTask>()
-    tasksCopy.addAll(input.tasks)
+    val expectedTasks = input.tasks.map { it.copy() }
 
-    tasksCopy[0] = tasksCopy[0].pause()
+    expectedTasks[0].pause()
 
-    val output = input.pause()
+    input.pause()
 
-    assertThat(output.state).isEqualTo(Day.State.DISABLED)
-    assertThat(output.tasks).containsExactlyElementsIn(tasksCopy)
+    assertThat(input.state).isEqualTo(Day.State.DISABLED)
+    assertThat(input.tasks).containsExactlyElementsIn(expectedTasks)
   }
 
   @Test
@@ -39,14 +38,14 @@ class DayLogicTest {
       .setDayState(Day.State.ACTIVE)
       .build()
 
-    val output = input.setNewTask()
+    val expectedTasks = input.tasks.map { it.copy() }
+    expectedTasks.forEach { it.completeTask() }
 
-    assertThat(output.state).isEqualTo(Day.State.COMPLETED)
-    assertThat(output.currentTaskPos).isEqualTo(2)
+    input.setNewTask()
 
-    val expectedTasks = input.tasks.map {
-      it.completeTask()
-    }
-    assertThat(output.tasks).containsExactlyElementsIn(expectedTasks)
+    assertThat(input.state).isEqualTo(Day.State.COMPLETED)
+    assertThat(input.currentTaskPos).isEqualTo(2)
+
+    assertThat(input.tasks).containsExactlyElementsIn(expectedTasks)
   }
 }

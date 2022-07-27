@@ -1,5 +1,6 @@
 package com.sillyapps.timedoser.domain
 
+import com.sillyapps.core.di.AppScope
 import com.sillyapps.core_util.ticker.Ticker
 import com.sillyapps.timedoser.domain.logic.day.tick
 import com.sillyapps.timedoser.domain.model.Day
@@ -8,10 +9,11 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AppScope
 class DayProgressWatcher @Inject constructor(
-  private val repository: DayRepository,
   appScope: CoroutineScope,
-  private val ticker: Ticker
+  private val ticker: Ticker,
+  private val dayDataSource: DayDataSource
 ) {
 
   init {
@@ -22,13 +24,13 @@ class DayProgressWatcher @Inject constructor(
     }
   }
 
-  private suspend fun progress(dt: Long) {
-    val day = repository.getDayRaw().tick(dt)
+  private fun progress(dt: Long) {
+    dayDataSource.modify { day ->
+      day.tick(dt)
 
-    if (day.state != Day.State.ACTIVE)
-      ticker.stop()
-
-    repository.setDay(day)
+      if (day.state != Day.State.ACTIVE)
+        ticker.stop()
+    }
   }
 
 }

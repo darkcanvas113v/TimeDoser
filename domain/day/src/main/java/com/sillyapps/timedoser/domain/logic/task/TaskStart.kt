@@ -1,10 +1,9 @@
 package com.sillyapps.timedoser.domain.logic.task
 
 import com.sillyapps.timedoser.domain.model.RunningTask
+import com.sillyapps.timedoser.domain.model.mutable.MutableTask
 
-internal fun RunningTask.taskStart(startTime: Long): RunningTask {
-  return this.copy(
-    startTime = startTime,
-    state = RunningTask.State.ACTIVE
-  )
+internal fun MutableTask.taskStart(startTime: Long) {
+  this.startTime = startTime
+  state = RunningTask.State.ACTIVE
 }
